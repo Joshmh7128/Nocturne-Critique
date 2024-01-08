@@ -33,6 +33,7 @@ Unfortunately, we don't, and won't. The point of adding in this critique is to b
 ## Sections
 ### Technical
 [[Nocturne Technical Critique]]
+
 [[Nocturne Code Readability Assessment]]
 ### Design
 [[Nocturne Design Critique]]
