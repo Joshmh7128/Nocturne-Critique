@@ -40,6 +40,8 @@ Nocturne's scene setup is rooted fundamentally in the construction of only a few
 You will find that the easiest pattern to work around this is building an additive scene loading pattern in which different aspects of play load in difference scenes asynchronously only when they are required. In many cases you can build an [asset bundle](https://docs.unity3d.com/Manual/AssetBundlesIntro.html) to more effectively load this on slower platforms. 
 # Architecture Pattern
 #actionable-critique 
+As far as I can tell from a technical standpoint there is not a specific architectural pattern used in Nocturne to organize or link together any of the scripts in the projects. The general aspects of the project appear to be linked together on a case-by-case basis. Without a standard set for how scripts talk to one another what results in an extremely hard-coded project with an extremely high dependency on itself. This makes changing or prototyping incredibly difficult. 
+
 -lack of unified aspects of the project results in one that is deeply engrained and tied together, making it cumbersome to properly untie.
 -results in a mess
 # Event Usage & Check Structure
@@ -106,3 +108,7 @@ At the moment the Unity Project favors the Mac OS operating system. This is due 
 # Repository Pulse
 #actionable-critique 
 -Not enough commit frequency
+
+# Reliance on Oculus Package
+#actionable-critique 
+-project relies to heavily on the Oculus input package
