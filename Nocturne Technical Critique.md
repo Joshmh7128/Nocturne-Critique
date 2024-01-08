@@ -42,8 +42,7 @@ You will find that the easiest pattern to work around this is building an additi
 #actionable-critique 
 As far as I can tell from a technical standpoint there is not a specific architectural pattern used in Nocturne to organize or link together any of the scripts in the projects. The general aspects of the project appear to be linked together on a case-by-case basis. Without a standard set for how scripts talk to one another what results in an extremely hard-coded project with an extremely high dependency on itself. This makes changing or prototyping incredibly difficult. 
 
--lack of unified aspects of the project results in one that is deeply engrained and tied together, making it cumbersome to properly untie.
--results in a mess
+In addition to a project that is difficult to prototype or change, this also results in one which is difficult to untangle. It turns into a mess of spaghetti which becomes tied together quite tightly, resulting in an inseparable pattern.
 # Event Usage & Check Structure
 #actionable-critique 
 After reviewing the architecture of Nocturne I feel it worth mentioning that there is no use of [C# Events](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/events/) throughout the project. The Publisher/Subscriber model is one used commonly in games, and is baked into the majority of modern Game Engines. 
@@ -102,7 +101,25 @@ One aspect I've found through brute-force in my (eventually successful) attempts
 At the moment the Unity Project favors the Mac OS operating system. This is due to the structure and nature of the way generated files are built. When launching the project on a Windows machine it can be more than difficult to properly set it up. 
 # Third Party Save System
 #actionable-critique 
--what the fuck
+Currently it appears that save files are being utilized through a third party asset called "Easy Save 3." As many aspects of the project are currently dependent on this, I highly recommend shifting away from an asset and building a bespoke save system from the ground up. From what I understand the game does not currently reconstruct songs reliably, resulting in a difficult end user experience.
+
+While the asset may be something which is helpful for some games, due to the procedural creation and customization of Nocturne, the team may want to consider moving away from this setup as it appears to be built for games with a linear progression, rather than ones with dynamically user-built aspects.
+
+In my opinion, for procedurally built aspects, there are two main methodologies to consider when building this out...
+## Constructor Argument & Rationale
+In many games which feature musical elements, such as *Guitar Hero, Beat Saber,* and many more, tracks are "mapped" to a specific set of notes which are played back through the song. The track is constructed in real time, then rebuilt on the spot. Constructors are a well known concept in programming. 
+
+For Nocturne, the team may heavily want to consider the construction of a specific file-type and constructor system which is independent and built directly into the game itself. Rather than relying on a third party asset to handle the holding of elements, building a specific project file which saves and loads each block on the score will enable more complex and specific elements to be saved rather than worry about the overhead of third party assets.
+
+The Score will have to be translated into a file, saved, and then on load it must be untranslated. One of the most difficult aspects of this methodology is going to be the testing which goes into saving and loading, as there will be countless aspects that have to be cross-referenced in order to ensure portability.
+### Cloud-Service Implementation
+Additionally by making the saved data into a custom text file, this opens up the ability for the files to be more easily uploaded and downloaded from cloud services. This includes cloud-save services for Steam and Epic platforms, but also opens opportunities for both the Steam Workshop and sharing songs with one another online. 
+## Direct-Manipulation Argument & Rationale
+Typically in DAWs which are built and used on a computer the program will be modifying the file in-memory, with the aspects of the track displaying what is currently loaded. For many games with procedural elements it is also commonplace to directly manipulate a file at runtime and then save it intermittently.
+
+Good examples of this model are seen in city builders. SimCity 4 loads the entire map and all its data into memory, then as the player plays and manipulates the world the file is overwritten on save. This creates a more sustainably holistic form of file-management, as it is clear that the thing you are modifying is the thing which will be saved. This is lost in the Constructor model, as you are saving data which can be used to rebuild the state you are currently in, rather than the current state of the Score as a file.
+
+While this model is more reliable and direct, it does mean potentially larger file types, and a more intense memory bandwidth. That being said, by building this holistically we can more assuredly realize a save system that reinforces the stability of Nocturne.
 # File Organization
 #actionable-critique 
 # Repository Pulse
